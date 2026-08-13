@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>방지훈 · Cloud Infrastructure Leader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#101722;
+    --ink-soft:#3a4454;
+    --muted:#68738a;
+    --paper:#ffffff;
+    --surface:#f5f7fa;
+    --line:#e3e7ee;
+    --accent:#0fb8a5;
+    --accent-dim:#e4f7f4;
+    --accent-ink:#0a7f72;
+    --radius:14px;
+    --maxw:880px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Space Grotesk','Malgun Gothic',sans-serif;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  .mono{
+    font-family:'JetBrains Mono',monospace;
+  }
+  a{color:inherit;}
+
+  /* ---------- NAV ---------- */
+  .toc{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .toc-inner{
+    max-width:var(--maxw);
+    margin:0 auto;
+    display:flex;
+    gap:2px;
+    overflow-x:auto;
+    padding:0 24px;
+    scrollbar-width:none;
+  }
+  .toc-inner::-webkit-scrollbar{display:none;}
+  .toc a{
+    white-space:nowrap;
+    text-decoration:none;
+    font-size:12.5px;
+    font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.02em;
+    color:var(--muted);
+    padding:14px 10px;
+    border-bottom:2px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .toc a:hover{color:var(--ink);}
+  .toc a.active{color:var(--accent-ink);border-bottom-color:var(--accent);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(circle at 6px 6px, rgba(15,184,165,0.15) 1.4px, transparent 1.4px) 0 0/26px 26px,
+      var(--ink);
+    color:#fff;
+    padding:64px 24px 46px;
+  }
+  .hero-inner{max-width:var(--maxw);margin:0 auto;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 4px rgba(15,184,165,0.22);
+  }
+  .hero h1{
+    font-size:clamp(34px,6vw,52px);
+    font-weight:700;
+    color:#fff;
+  }
+  .hero .role{
+    margin-top:10px;
+    font-size:clamp(15px,2.4vw,18px);
+    color:#c7ceda;
+    font-weight:500;
+    max-width:640px;
+  }
+  .contact-row{
+    margin-top:26px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 22px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    color:#aab3c4;
+  }
+  .contact-row span{display:inline-flex;align-items:center;gap:7px;}
+  .contact-row b{color:#e7ebf2;font-weight:500;}
+
+  /* ---------- LAYOUT ---------- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  section{padding:52px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:28px;
+  }
+  .section-head .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--accent-ink);
+    background:var(--accent-dim);
+    padding:3px 8px;
+    border-radius:6px;
+  }
+  .section-head h2{
+    font-size:23px;
+    font-weight:700;
+  }
+  .lede{
+    font-size:15.5px;
+    color:var(--ink-soft);
+    max-width:640px;
+  }
+
+  /* ---------- SUMMARY ---------- */
+  .summary-text{
+    font-size:16px;
+    color:var(--ink-soft);
+    line-height:1.85;
+    max-width:680px;
+  }
+
+  /* ---------- CHIP GROUPS ---------- */
+  .chip-block{margin-bottom:26px;}
+  .chip-block:last-child{margin-bottom:0;}
+  .chip-block h4{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    font-weight:500;
+    margin-bottom:12px;
+  }
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-size:13.5px;
+    padding:7px 13px;
+    border-radius:20px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    font-weight:500;
+  }
+  .chip.on{
+    background:var(--accent-dim);
+    border-color:transparent;
+    color:var(--accent-ink);
+  }
+
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:36px;
+  }
+  @media (max-width:640px){.two-col{grid-template-columns:1fr;}}
+
+  /* ---------- TIMELINE (EXPERIENCE) ---------- */
+  .timeline{position:relative;padding-left:28px;}
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:5px;top:6px;bottom:6px;
+    width:2px;
+    background:linear-gradient(to bottom, var(--accent), var(--line) 92%);
+  }
+  .tl-item{position:relative;padding-bottom:30px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:"";
+    position:absolute;
+    left:-28px;top:5px;
+    width:11px;height:11px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2.5px solid var(--accent);
+  }
+  .tl-item.current::before{
+    background:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-dim);
+  }
+  .tl-head{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:8px 12px;
+    margin-bottom:5px;
+  }
+  .tl-head .title{font-weight:700;font-size:16px;}
+  .tl-head .company{color:var(--accent-ink);font-weight:600;font-size:15px;}
+  .tl-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px 14px;
+    margin-bottom:8px;
+  }
+  .tl-scope{font-size:14px;color:var(--ink-soft);}
+  .tl-scope b{color:var(--ink);font-weight:600;}
+  .badge-current{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    font-weight:600;
+    color:var(--accent-ink);
+    background:var(--accent-dim);
+    padding:2px 8px;
+    border-radius:20px;
+    letter-spacing:0.03em;
+  }
+
+  /* ---------- PROJECT GROUPS ---------- */
+  .proj-group{margin-bottom:40px;}
+  .proj-group:last-child{margin-bottom:0;}
+  .proj-group-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .proj-group-title .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    color:#fff;
+    background:var(--ink);
+    padding:4px 10px;
+    border-radius:6px;
+  }
+  .proj-group-title h3{font-size:17px;font-weight:700;}
+
+  .proj-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px 22px;
+    margin-bottom:12px;
+  }
+  .proj-card:last-child{margin-bottom:0;}
+  .proj-head{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:6px 16px;
+    margin-bottom:10px;
+  }
+  .proj-head .p-title{font-weight:700;font-size:15px;line-height:1.4;}
+  .proj-head .p-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .proj-card ul{
+    margin:0;
+    padding-left:18px;
+    color:var(--ink-soft);
+    font-size:13.8px;
+  }
+  .proj-card li{margin-bottom:4px;}
+  .proj-card li:last-child{margin-bottom:0;}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:6px 16px;
+    padding:18px 22px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    margin-bottom:24px;
+  }
+  .edu-card .school{font-weight:700;font-size:15.5px;}
+  .edu-card .major{color:var(--muted);font-size:13.5px;margin-top:2px;}
+  .edu-card .period{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted);}
+
+  .train-list{display:flex;flex-direction:column;gap:0;}
+  .train-item{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    padding:12px 0;
+    border-bottom:1px dashed var(--line);
+    font-size:14px;
+  }
+  .train-item:last-child{border-bottom:none;}
+  .train-item .t-name{color:var(--ink-soft);}
+  .train-item .t-org{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+    white-space:nowrap;
+    text-align:right;
+  }
+
+  footer{
+    text-align:center;
+    padding:34px 24px 50px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    letter-spacing:0.03em;
+  }
+
+  @media print{
+    .toc{display:none;}
+    section{break-inside:avoid;padding:24px 0;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#summary">SUMMARY</a>
+    <a href="#skills">SKILLS</a>
+    <a href="#experience">EXPERIENCE</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#education">EDUCATION</a>
+    <a href="#credentials">CERT/LANG</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Career Profile</div>
+    <h1>방지훈</h1>
+    <p class="role">Cloud Infrastructure Leader (TA / CA / 컨설팅) — 금융·공공·제조 부문 프로젝트 리더</p>
+    <div class="contact-row">
+      <span>☎ <b>010-2642-0181</b></span>
+      <span>✉ <b>jhbang@kakao.com</b></span>
+      <span>🔗 <b>LinkedIn 입력</b></span>
+      <span>📅 <b>1982.10.02</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="summary">
+    <div class="section-head"><span class="num">01</span><h2>Summary</h2></div>
+    <p class="summary-text">
+      17년 이상의 네트워크·보안·클라우드 인프라 경력을 바탕으로, 금융권과 공공기관을 중심으로 클라우드 전환 아키텍처 설계, 컨설팅, 구축 사업을 다수 리딩해 온 인프라 전문가입니다.
+      특히 금융권 보안 요건(망분리 등)을 반영한 Landing Zone 설계, 행정안전부 주관 국가 재난안전 시스템의 클라우드 네이티브 전환 컨설팅 등 신뢰도와 보안성이 요구되는 프로젝트에서
+      TA 파트리더 및 PL(Project Leader)로서 설계 총괄, 일정·품질 관리, 이해관계자 협의를 직접 수행한 경험을 보유하고 있습니다.
+    </p>
+  </section>
+
+  <section id="skills">
+    <div class="section-head"><span class="num">02</span><h2>Skills &amp; Expertise</h2></div>
+    <div class="two-col">
+      <div>
+        <div class="chip-block">
+          <h4>Core Skills</h4>
+          <div class="chips">
+            <span class="chip on">TA/CA/컨설팅</span>
+            <span class="chip on">프로젝트 리딩(TA PL)</span>
+            <span class="chip on">클라우드 네이티브 전환</span>
+            <span class="chip">제안서 작성</span>
+            <span class="chip">MSP 운영</span>
+            <span class="chip">보안 인프라 운영</span>
+            <span class="chip">네트워크 설계·구축</span>
+            <span class="chip">공공기관 사업</span>
+          </div>
+        </div>
+        <div class="chip-block">
+          <h4>Platforms</h4>
+          <div class="chips">
+            <span class="chip">AWS</span>
+            <span class="chip">NCP</span>
+            <span class="chip">SCP</span>
+            <span class="chip">NHN</span>
+          </div>
+        </div>
+        <div class="chip-block">
+          <h4>Network / Security</h4>
+          <div class="chips">
+            <span class="chip">Cisco</span>
+            <span class="chip">Extreme Networks</span>
+            <span class="chip">CoreEdge</span>
+            <span class="chip">IPS/DDoS/WAF</span>
+            <span class="chip">Wireless Controller</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="chip-block">
+          <h4>Industry Expertise</h4>
+          <div class="chips">
+            <span class="chip on">금융 (보험·카드·은행)</span>
+            <span class="chip on">공공 (중앙부처·교육청·경찰청 등)</span>
+            <span class="chip">제조·대기업 (LG화학, 삼성전자 등)</span>
+            <span class="chip">클라우드 인프라·IT 컨설팅</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head"><span class="num">03</span><h2>Experience</h2></div>
+    <div class="timeline">
+
+      <div class="tl-item current">
+        <div class="tl-head">
+          <span class="title">부장 · 클라우드사업부</span>
+          <span class="company">유큐브</span>
+          <span class="badge-current">재직중</span>
+        </div>
+        <div class="tl-meta"><span>📅 2025.11 ~ 재직중</span><span>📍 서울</span></div>
+        <div class="tl-scope"><b>핵심직무</b> TA/CA/컨설팅 · <b>주요사업</b> 클라우드 컨설팅</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><span class="title">차장 · 클라우드사업본부</span><span class="company">유니와이드</span></div>
+        <div class="tl-meta"><span>📅 2025.06 ~ 2025.11</span><span>📍 서울</span></div>
+        <div class="tl-scope"><b>핵심직무</b> TA/CA/컨설팅 · <b>주요사업</b> 공공 클라우드 운영 및 구축</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><span class="title">차장 · MSP사업본부</span><span class="company">아이엔소프트</span></div>
+        <div class="tl-meta"><span>📅 2021.05 ~ 2025.06</span><span>📍 서울</span></div>
+        <div class="tl-scope"><b>핵심직무</b> TA/CA/컨설팅 · <b>주요사업</b> 클라우드 전환 및 운영</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><span class="title">차장 · Security Team</span><span class="company">뉴엣지</span></div>
+        <div class="tl-meta"><span>📅 2020.10 ~ 2021.05</span><span>📍 서울</span></div>
+        <div class="tl-scope"><b>핵심직무</b> 네트워크, 보안 · <b>주요사업</b> LG전자 및 공공기관 유지보수 사업</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><span class="title">과장 · 기획2팀</span><span class="company">연무기술</span></div>
+        <div class="tl-meta"><span>📅 2016.06 ~ 2020.10</span><span>📍 대전</span></div>
+        <div class="tl-scope"><b>핵심직무</b> 네트워크, 보안 · <b>주요사업</b> 누리꿈스퀘어 통합 유지보수</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><span class="title">과장 · 인프라2팀</span><span class="company">티플러스</span></div>
+        <div class="tl-meta"><span>📅 2015.04 ~ 2016.01</span><span>📍 서울</span></div>
+        <div class="tl-scope"><b>핵심직무</b> 네트워크, 보안 · <b>주요사업</b> PACS 시스템 구축 및 유지보수</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><span class="title">대리 · 기술2팀</span><span class="company">DMX Korea</span></div>
+        <div class="tl-meta"><span>📅 2014.04 ~ 2015.03</span><span>📍 서울</span></div>
+        <div class="tl-scope"><b>핵심직무</b> 네트워크, 보안 · <b>주요사업</b> 기업 및 공공기관 프로젝트 사업</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><span class="title">대리 · 네트워크팀</span><span class="company">에이플러스</span></div>
+        <div class="tl-meta"><span>📅 2013.01 ~ 2014.03</span><span>📍 서울</span></div>
+        <div class="tl-scope"><b>핵심직무</b> 네트워크, 보안 · <b>주요사업</b> 삼성전자 프로젝트 사업 지원</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><span class="title">대리 · 유지보수팀</span><span class="company">랜스</span></div>
+        <div class="tl-meta"><span>📅 2011.09 ~ 2012.12</span><span>📍 대전</span></div>
+        <div class="tl-scope"><b>핵심직무</b> 네트워크, 보안 · <b>주요사업</b> 공공기관 유지보수 사업</div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head"><span class="title">대리 · 송파운영팀</span><span class="company">ONC Networks</span></div>
+        <div class="tl-meta"><span>📅 2009.08 ~ 2011.09</span><span>📍 서울</span></div>
+        <div class="tl-scope"><b>핵심직무</b> 네트워크 · <b>주요사업</b> SKB 가입자망, 기간망, 기업망 유지보수 사업</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head"><span class="num">04</span><h2>Projects</h2></div>
+    <p class="lede" style="margin-bottom:32px;">공공·제조·금융 부문 주요 수행 프로젝트 및 제안 활동입니다.</p>
+
+    <!-- 공공 -->
+    <div class="proj-group">
+      <div class="proj-group-title"><span class="tag">공공</span><h3>Public Sector</h3></div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">클라우드 네이티브 전환 상세설계 사업(8차, 행안부 주관)</span><span class="p-meta">2025.11 ~ 2025.12 · 대전</span></div>
+        <ul>
+          <li>안전디딤돌, 국민재난안전포털, 재난관리업무포털 등 3개 대국민 업무 포털의 현행 인프라 분석 및 전환 대상 선정</li>
+          <li>MSA, 컨테이너 기반 목표 아키텍처 상세설계 및 서비스 무중단을 고려한 단기적 전환 로드맵 수립</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">충북교육청 다채움·체인지 서비스 NHN Cloud 운영 및 구축</span><span class="p-meta">2025.06 ~ 2025.11 · 서울</span></div>
+        <ul>
+          <li>NHN Cloud 기반 인프라(컴퓨팅, 네트워크, 보안) 운영 자원 증설 및 구성 변경 수행</li>
+          <li>Prometheus, Grafana 기반 통합 모니터링 체계 구축을 통한 운영 안정화</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">도로교통공사 중소기업 기술마켓 개발 구축 사업 (기술파트 리더)</span><span class="p-meta">2025.03 ~ 2025.05 · 서울</span></div>
+        <ul>
+          <li>도로교통공사 중소기업 기술 마켓 클라우드 전환 아키텍처 설계 총괄 및 구축 일정 품질 관리</li>
+          <li>개발 조직 및 기술 협의 주관 및 보안, 비용 최적화 방안 마련</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">NIA, NIAP SaaS 전환 지원 사업 (기술파트 리더)</span><span class="p-meta">2024.09 ~ 2024.12 · 서울</span></div>
+        <ul>
+          <li>클라우드 인프라 아키텍처 설계 총괄 및 구축 일정 품질 관리</li>
+          <li>고객 개발 조직과의 기술 협의 주관, 보안 및 비용 최적화 방안 마련</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">바이코리아 1,2차 고도화 사업 클라우드 전환 프로젝트 (기술파트 리더)</span><span class="p-meta">2023.06 ~ 2024.07 · 서울</span></div>
+        <ul>
+          <li>바이코리아 1,2차 고도화 클라우드 전환 인프라 아키텍처 설계 총괄 및 구축 일정 품질 관리</li>
+          <li>개발 조직 및 기술 협의 주관 및 보안, 비용 최적화 방안 마련</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">공공기관 유지보수 (행안부, 식품안전처, 서울시설관리공단) (기술파트 리더)</span><span class="p-meta">2021.02 ~ 2021.05 · 서울</span></div>
+        <ul>
+          <li>식품안전처 전산망 네트워크 유지보수 및 구성 변경 작업 지원</li>
+          <li>행정안전부 전산망 네트워크 유지보수 및 구성 변경 작업 지원</li>
+          <li>서울시설관리공단 네트워크 유지보수 및 구성 변경 작업 지원</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">남부지방경찰청 노후화 백본 스위치 교체 사업</span><span class="p-meta">2020.10 ~ 2020.11 · 서울</span></div>
+        <ul>
+          <li>경기지방경찰청 관할 내 경찰서 노후화 백본 스위치 교체 사업</li>
+          <li>무중단 네트워크 변경 작업 수행</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">NIPA(누리꿈스퀘어) 통합 유지보수 (기술파트 리더)</span><span class="p-meta">2016.06 ~ 2020.10 · 서울</span></div>
+        <ul>
+          <li>NIPA 서울사무소(누리꿈스퀘어) 통합 유지보수 총괄 리더 업무 수행</li>
+          <li>17년 노후화 IPS, DDoS 교체 사업 수행</li>
+          <li>18년 노후화 스위치 및 Wireless Controller, Access Point 교체 사업 수행</li>
+          <li>19년 노후화 백본 스위치 및 Firewall 교체 사업 수행</li>
+          <li>20년 무선 네트워크 망분리 구성 변경 작업 수행</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">카이스트 경영대학원 통합 유지보수</span><span class="p-meta">2011.09 ~ 2012.12 · 서울</span></div>
+        <ul>
+          <li>카이스트 경영대학원 통합 유지보수 업무 수행</li>
+          <li>백본스위치 VSS 환경 구성 및 Wism-2 Controller 구성 관리</li>
+          <li>기숙사 무선 네트워크 신규 구축 설계</li>
+          <li>IP 재설계 및 BCP 변경작업 수행</li>
+          <li>Mail 서버 및 DNS 서버 관리 및 통합 모니터링 수행</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 제조 -->
+    <div class="proj-group">
+      <div class="proj-group-title"><span class="tag">제조</span><h3>Manufacturing</h3></div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">LG화학 전지분할 프로젝트</span><span class="p-meta">2020.10 ~ 2020.12 · 서울</span></div>
+        <ul>
+          <li>LG화학 전지분할 프로젝트 네트워크 아키텍처 구성 설계 및 구축</li>
+          <li>망분리에 따른 보안정책 적용 및 신규 인프라 연동 구성 수행</li>
+          <li>기존 네트워크와 신규 네트워크 간 연결 및 Routing 구조 설계</li>
+          <li>Cloud System과 연동을 위한 Routing 구성 및 정책 적용</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">병원 PACS 시스템 네트워크 구축 및 유지보수</span><span class="p-meta">2015.04 ~ 2015.06 · 서울</span></div>
+        <ul>
+          <li>병원 PACS 시스템 네트워크 설계 및 구성</li>
+          <li>병원 내부 업무망과 PACS 시스템 간 네트워크 연동을 위한 접근제어 구성 지원</li>
+          <li>PACS 영상 조회 및 전송 지연 발생 시 네트워크 구간 트래픽 분석</li>
+          <li>PACS 시스템 네트워크 정기 유지보수</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">삼성전자 수원사업장 네트워크 유지보수</span><span class="p-meta">2014.04 ~ 2015.03 · 수원</span></div>
+        <ul>
+          <li>삼성전자 수원사업장 R3, R4, R5 Extreme Network 스위치 유지보수 업무</li>
+          <li>Extreme Network 스위치 장애 발생 시 원인 분석 및 CASE OPEN 업무 담당</li>
+          <li>사업장 Network 모니터링 수행 및 장애 대응 업무 수행</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">삼성전자 중국 시안 반도체 구축 프로젝트 (구축파트 리더)</span><span class="p-meta">2013.09 ~ 2014.03 · 중국 시안</span></div>
+        <ul>
+          <li>삼성전자 중국 시안 반도체 현장 FAB, OFFICE 네트워크 구축 업무 총괄 리더 수행</li>
+          <li>생산 라인 및 Office 네트워크 아키텍처 설계 및 구성</li>
+          <li>MES, PLC 등 생산라인 연결 구성 작업 수행</li>
+          <li>광케이블 라인 구성 설계 및 FDF, Rack 실장 구성</li>
+          <li>Core / Distribute / Industrial Switch 이중화 구성 설계 및 구축 업무 수행</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">삼성전자 중국 쑤저우 디스플레이 구축 프로젝트 (구축파트 리더)</span><span class="p-meta">2013.04 ~ 2014.09 · 중국 쑤저우</span></div>
+        <ul>
+          <li>삼성전자 중국 쑤저우 반도체 현장 FAB, OFFICE 네트워크 구축 업무 총괄 리더 수행</li>
+          <li>생산 라인 및 Office 네트워크 아키텍처 설계 및 구성</li>
+          <li>MES, PLC 등 생산라인 연결 구성 작업 수행</li>
+          <li>광케이블 라인 구성 설계 및 FDF, Rack 실장 구성</li>
+          <li>Core / Distribute / Industrial Switch 이중화 구성 설계 및 구축 업무 수행</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">삼성전자 스마트스쿨 B2B 사업 업무 지원</span><span class="p-meta">2013.01 ~ 2014.02 · 전국</span></div>
+        <ul>
+          <li>전국 초등학교 스마트스쿨 서비스 지원 사업 네트워크 분석 및 개선 방안 수행</li>
+          <li>스마트스쿨 서비스 제공을 위한 학교 네트워크 설계</li>
+          <li>무선 음영지역 분석 및 간섭 현황 파악 후 개선방안 도출</li>
+          <li>무선 AP와 Wireless Controller간 관리 상태 및 설정 값 연결 상태 점검 후 문제점 분석</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">SKB 가입자, 기간망, 기업망 유지보수</span><span class="p-meta">2009.08 ~ 2011.09 · 서울</span></div>
+        <ul>
+          <li>SKB 가입자망, 기간망 및 기업망 네트워크 관제 및 운영 업무 수행</li>
+          <li>NMS 및 네트워크 관리시스템을 활용한 네트워크 장비 및 회선 상태 모니터링 수행</li>
+          <li>네트워크 장애 및 회선 장애에 대한 초동 대응 및 장애 원인 분석, 복구 업무 수행</li>
+          <li>네트워크 변경 작업에 따른 서비스 영향도 파악 및 작업 진행</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">GS 그룹사 네트워크 유지보수</span><span class="p-meta">2008.11 ~ 2009.08 · 서울</span></div>
+        <ul>
+          <li>GS칼텍스 및 그룹사 네트워크 유지보수</li>
+          <li>네트워크 월간 정기점검 및 장애발생에 대한 원인 분석 및 복구 업무 수행</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 금융 -->
+    <div class="proj-group">
+      <div class="proj-group-title"><span class="tag">금융</span><h3>Finance</h3></div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">현대해상 미래 아키텍처 설계 전환 컨설팅</span><span class="p-meta">2026.03 ~ 2026.08 · 서울</span></div>
+        <ul>
+          <li>현대해상 시스템 현행분석 및 Landing Zone 기반 아키텍처 설계 컨설팅</li>
+          <li>AWS 기반 Multi-Account 전략 및 Organization 구조 설계</li>
+          <li>Control Tower 기반 Landing 중앙 아키텍처 기반 설계</li>
+          <li>온프레미스 연계 방안 및 네트워크 구조 설계</li>
+          <li>금융권 보안 정책에 맞는 보안 서비스 통합 구조 설계</li>
+          <li>DR 아키텍처 및 업무 중요도에 따른 Pilot Light / Warm Standby 복구 전략 수립</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">삼성카드 통합쇼핑몰, 복지몰 클라우드 전환 프로젝트</span><span class="p-meta">2021.10 ~ 2023.03 · 서울</span></div>
+        <ul>
+          <li>삼성카드 통합쇼핑몰, 복지몰 AWS Landing Zone 기반 클라우드 아키텍처 설계 및 구축</li>
+          <li>Organization 기반 Multi-Account 구조 설계 및 구축</li>
+          <li>Dev, Stg, Prod Workload 환경별 계정 분리</li>
+          <li>Transit Gateway 기반 Hub&amp;Spoke 네트워크 아키텍처 설계 및 구축</li>
+          <li>분산형 아키텍처 구조 설계 및 보안 구조 설계 구축</li>
+        </ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">전국은행연합회 센터 이전 및 망분리 사업</span><span class="p-meta">2015.06 ~ 2015.12 · 서울</span></div>
+        <ul>
+          <li>전국은행연합회 센터 이전 및 망분리 프로젝트 Network Part PL 수행</li>
+          <li>현행 네트워크 구성 및 운영환경 분석</li>
+          <li>DR센터의 네트워크 설계 및 구성</li>
+          <li>DR센터와 Main센터간 전용회선 구성 및 대외 연동 회선 절체 작업 수행</li>
+          <li>대외망과 내부망 분리 구성 작업 수행</li>
+          <li>센터 이전 계획 수립 및 이전 수행</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 제안 -->
+    <div class="proj-group">
+      <div class="proj-group-title"><span class="tag">제안</span><h3>Proposals</h3></div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">경남교육청 SCP 클라우드 전환 제안</span><span class="p-meta">2025.08 ~ 2025.09 · 서울</span></div>
+        <ul><li>경남교육청 SCP 클라우드 전환 제안 작업 수행</li></ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">도로교통공사 중소기업 기술마켓 개발 구축 제안</span><span class="p-meta">2025.02 ~ 2025.03 · 서울</span></div>
+        <ul><li>도로교통공사 중소기업 기술마켓 개발 구축 제안 작업 수행</li></ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">삼성전자 이모지 사업자 전환 제안서 작성</span><span class="p-meta">2025.08 ~ 2025.09 · 서울</span></div>
+        <ul><li>삼성전자 이모지 시스템 사업자 전환 제안서 작업 수행</li></ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">코트라 바이코리아 1,2차 고도화 클라우드 전환 제안</span><span class="p-meta">2023.04 ~ 2023.05 · 서울</span></div>
+        <ul><li>바이코리아 시스템의 SCP 클라우드 전환 제안 작업 수행</li></ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">NIA 디지털 서비스 품질 제안서 작성</span><span class="p-meta">2021.07 ~ 2025.08 · 서울</span></div>
+        <ul><li>NIA 디지털 서비스 품질 제안서 작업 수행</li></ul>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head"><span class="p-title">창업진흥원 클라우드 전환 사업 제안</span><span class="p-meta">2021.05 ~ 2025.06 · 서울</span></div>
+        <ul><li>창업진흥원 클라우드 전환 사업 제안서 작업 수행</li></ul>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="education">
+    <div class="section-head"><span class="num">05</span><h2>Education &amp; Training</h2></div>
+
+    <div class="edu-card">
+      <div>
+        <div class="school">경동대학교</div>
+        <div class="major">컴퓨터공학과</div>
+      </div>
+      <div class="period">2001.03 ~ 2009.02</div>
+    </div>
+
+    <div class="train-list">
+      <div class="train-item"><span class="t-name">NHN Cloud Training – Cloud Architecting</span><span class="t-org">NHN Cloud · 2024.07</span></div>
+      <div class="train-item"><span class="t-name">NHN Kubernetes Service – Advanced</span><span class="t-org">NHN Cloud · 2024.04</span></div>
+      <div class="train-item"><span class="t-name">NHN Kubernetes Service – Intermediate</span><span class="t-org">NHN Cloud · 2024.04</span></div>
+      <div class="train-item"><span class="t-name">코드 인프라를 위한 AWS 아키텍처 설계</span><span class="t-org">솔데스크 · 2021.07 ~ 08</span></div>
+      <div class="train-item"><span class="t-name">실무자를 위한 차세대 무선네트워크 과정</span><span class="t-org">한국전파진흥협회 · 2021.03</span></div>
+      <div class="train-item"><span class="t-name">FC/FCoE 기반 Nexus와 UCS서버 구축</span><span class="t-org">패스트레인정보통신학원 · 2015.07</span></div>
+      <div class="train-item"><span class="t-name">클라우드 컴퓨터 전문가(VMWare vSphere 5.5)</span><span class="t-org">한국전파진흥협회 · 2014.11</span></div>
+    </div>
+  </section>
+
+  <section id="credentials">
+    <div class="section-head"><span class="num">06</span><h2>Certificates &amp; Languages</h2></div>
+    <div class="two-col">
+      <div class="chip-block">
+        <h4>Certificates</h4>
+        <div class="chips">
+          <span class="chip">NCA</span>
+          <span class="chip">VCP-NV</span>
+          <span class="chip">CCNP</span>
+          <span class="chip">CCNA</span>
+          <span class="chip">ENA</span>
+          <span class="chip">ENS</span>
+          <span class="chip">컴퓨터프로그래머 1급</span>
+          <span class="chip">정보처리기능사</span>
+        </div>
+      </div>
+      <div class="chip-block">
+        <h4>Languages</h4>
+        <div class="chips">
+          <span class="chip on">한국어 (모국어)</span>
+          <span class="chip">영어 (중급)</span>
+          <span class="chip">중국어 (초급)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>방지훈 · Cloud Infrastructure Leader — Career Profile</footer>
+
+<script>
+  const links = document.querySelectorAll('.toc a');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href')));
+  function onScroll(){
+    let idx = 0;
+    const y = window.scrollY + 90;
+    sections.forEach((sec, i) => { if(sec && sec.offsetTop <= y) idx = i; });
+    links.forEach((a,i) => a.classList.toggle('active', i === idx));
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+</script>
+
+</body>
+</html>
